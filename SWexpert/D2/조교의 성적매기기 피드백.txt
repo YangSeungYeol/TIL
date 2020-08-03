@@ -1,0 +1,43 @@
+package Solution;
+
+import java.util.Arrays;
+import java.util.Scanner;
+ 
+ 
+ 
+class Solution
+{
+    public static void main(String args[]) throws Exception {
+        Scanner sc = new Scanner(System.in);
+        int T;
+        T = sc.nextInt();
+        for (int test_case = 1; test_case <= T; test_case++) {
+            int N = sc.nextInt(); int k = sc.nextInt() - 1; int result = 0;
+            int []grading = new int[N];
+             
+            for(int i=0; i<N; i++) {
+                grading[i] = sc.nextInt() * 35 + sc.nextInt()* 45 + sc.nextInt() *20;
+                if( i == k ) result = grading[i]; 
+            }   // 입력부
+             
+            Arrays.sort(grading);
+            int pos = Arrays.binarySearch(grading, result);
+            String grade = null;
+            switch( (int)(pos*(10./N)) ) {
+            case 0: grade = "D0"; break;
+            case 1: grade = "C-"; break;
+            case 2: grade = "C0"; break;
+            case 3: grade = "C+"; break;
+            case 4: grade = "B-"; break;
+            case 5: grade = "B0"; break;
+            case 6: grade = "B+"; break;
+            case 7: grade = "A-"; break;
+            case 8: grade = "A0"; break;
+            case 9: grade = "A+"; break;
+            }
+            System.out.println( "#" + test_case + " " + grade); // 출력부      
+        }
+    }
+}
+
+- Arrays.binarySearch()를 활용하고, 굳이 2차원 배열을 뒤집으려하지 않고 점수를 D0부터 A+로 역으로 매기는 식으로 코드를 짜면 간결하고 가독성좋게 짤 수 있다.
