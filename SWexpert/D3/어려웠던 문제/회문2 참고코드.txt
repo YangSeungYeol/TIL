@@ -1,0 +1,72 @@
+#include<iostream>
+#include<string>
+#include<string.h>
+using namespace std;
+char board[100][100];
+string str;
+string answer;
+
+void init() {
+    str.clear();
+    answer.clear();
+    memset(board, 0, sizeof(board));
+}
+
+bool ispal(string str) {//회문판별
+    int len = str.size();
+    for (int i = 0; i < len / 2; i++) {
+        if (str[i] != str[len - 1 - i]) {
+            return false;
+            break;
+        }
+    }
+    return true;
+}
+
+int main(void) {
+    for (int t = 1; t <= 10; t++) {
+        init();
+        int tc;
+        cin >> tc;//테스트케이스번호
+        for (int i = 0; i < 100; i++) {//글자판 입력
+            for (int j = 0; j < 100; j++) {
+                cin >> board[i][j];
+            }
+        }
+        for (int i = 0; i < 100; i++) {
+            for (int j = 0; j < 100; j++) {
+                for (int k = 99; k > j; k--) {//가로검사
+                    //if (board[i][j] == board[i][k]) {
+                        int jj = j;
+                        while (k - jj + 1 > 0) {//문자열복사
+                            str += board[i][jj];
+                            jj++;
+                        }
+                        if (ispal(str)) {//회문일 때
+                            if (answer.size() < str.size())//더 긴 회문이면
+                                answer = str;//갱신
+                        }
+                    //}
+                        str.clear();
+                }
+                for (int k = 99; k > j; k--) {//세로검사
+                    //if (board[j][i] == board[j][k]) {
+                        int jj = j;
+                        while (k - jj + 1 > 0) {//문자열복사
+                            str += board[jj][i];
+                            jj++;
+                        }
+                        if (ispal(str)) {//회문일 때
+                            if (answer.size() < str.size())//더 긴 회문이면
+                                answer = str;//갱신
+                        }
+                    //}
+                        str.clear();
+                }
+
+            }
+        }
+        cout << "#" << tc << ' ' << answer.size() << endl;
+    }
+    return 0;
+}
